@@ -24,6 +24,10 @@ body {
     text-align: center;
 }
 
+.menu-logo {
+    width: 40%;
+}
+
 input {
     border-radius: 33px;
     padding: 1em;
@@ -84,4 +88,45 @@ form {
 
 .hoverable_menu a.active {
     border-bottom: 3px solid #89C1C0;
+}
+
+.menu-links {
+    overflow: hidden;
+}
+
+.menu {
+    display: inline-flex;
+    font-size: 17px;
+}
+
+.menu-links a {
+    float: left;
+    color: #576155;
+    text-align: center;
+    padding: 16px;
+    text-decoration: none;
+}
+
+.search-container {
+    color: #576155;
+    text-align: center;
+    text-decoration: none;
+}
+
+.user-container a, i {
+    float: left;
+    color: #576155;
+    text-align: center;
+    padding: 16px;
+    text-decoration: none;
+}
+
+.menu-links a:hover {
+    border-bottom: 3px solid #89C1C0;
+    color: #576155;
+}
+
+.menu-links a.active {
+    border-bottom: 3px solid #89C1C0;
+    color: #576155;
 }
