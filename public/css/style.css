@@ -1,5 +1,6 @@
 body {
     margin: 0;
+    font-family: Lato, serif;
 }
 
 .container {
@@ -24,12 +25,16 @@ body {
 }
 
 input {
-    background-color: white;
     border-radius: 33px;
-    border-bottom: 1px solid gray;
     padding: 1em;
     margin: 1em;
     width: 50%;
+    border: none;
+    box-shadow: 0 0 15px 4px rgba(0, 0, 0, 0.06);
+}
+
+input:focus {
+    outline: none;
 }
 
 button {
@@ -37,7 +42,7 @@ button {
     border-radius: 33px;
 
     width: 50%;
-    border:none;
+    border: none;
     color: white;
     margin: 1em;
     line-height: 2.5em;
@@ -49,11 +54,34 @@ form {
     justify-content: center;
     align-items: center;
     width: 20%;
-    height: 20%;
 
     background: #576155 0 0 no-repeat padding-box;
     box-shadow: 0 6px 6px #576155;
     border: 1px solid #576155;
     border-radius: 33px;
 
+}
+
+.hoverable_menu {
+    overflow: hidden;
+    margin-bottom: 10pt;
+}
+
+.hoverable_menu a {
+    float: left;
+    display: block;
+    color: #f2f2f2;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+    font-size: 17px;
+    border-bottom: 3px solid transparent;
+}
+
+.hoverable_menu a:hover {
+    border-bottom: 3px solid #89C1C0;
+}
+
+.hoverable_menu a.active {
+    border-bottom: 3px solid #89C1C0;
 }
