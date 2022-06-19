@@ -1,0 +1,59 @@
+body {
+    margin: 0;
+}
+
+.container {
+    width: 100vw;
+    height: 100vw;
+    background: transparent linear-gradient(180deg, #bcbcbc 0%, #ffffff 100%) 0% 0% no-repeat padding-box;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: normal;
+    align-items: center;
+}
+
+.login-container {
+    width: 50%;
+}
+
+.logo {
+    width: 50%;
+    margin-top: 10%;
+    text-align: center;
+}
+
+input {
+    background-color: white;
+    border-radius: 33px;
+    border-bottom: 1px solid gray;
+    padding: 1em;
+    margin: 1em;
+    width: 50%;
+}
+
+button {
+    background: transparent linear-gradient(100deg, #9CC6B3 0%, #9CC6B3 100%) 0% 0% no-repeat padding-box;
+    border-radius: 33px;
+
+    width: 50%;
+    border:none;
+    color: white;
+    margin: 1em;
+    line-height: 2.5em;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 20%;
+    height: 20%;
+
+    background: #576155 0 0 no-repeat padding-box;
+    box-shadow: 0 6px 6px #576155;
+    border: 1px solid #576155;
+    border-radius: 33px;
+
+}
