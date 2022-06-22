@@ -28,7 +28,7 @@ body {
     width: 40%;
 }
 
-input {
+input, textarea, select {
     border-radius: 33px;
     padding: 1em;
     margin: 1em;
@@ -37,22 +37,65 @@ input {
     box-shadow: 0 0 15px 4px rgba(0, 0, 0, 0.06);
 }
 
-input:focus {
+.file-input {
+    border-radius: 0;
+    border: 2px dotted grey;
+}
+
+.labeled-select {
+    width: 80%;
+}
+
+label {
+    width: 50%;
+    border: none;
+}
+
+input:focus, textarea:focus, select:focus {
     outline: none;
+}
+
+h1, h3 {
+    text-align: center;
+    align-self: center;
+}
+
+.ingredient-select-container {
+    align-items: center;
+    width: 90%
+}
+
+.ingredient-select {
+    width: 20%;
+}
+
+.amount-input {
+    width: 15%;
+}
+
+.amount-select {
+    width: 20%;
+}
+
+.icon-button {
+    width: fit-content;
+    background: transparent;
+    border: 1px solid #9CC6B3;
+    align-self: center;
 }
 
 button {
     background: transparent linear-gradient(100deg, #9CC6B3 0%, #9CC6B3 100%) 0% 0% no-repeat padding-box;
     border-radius: 33px;
-
     width: 50%;
     border: none;
     color: white;
     margin: 1em;
     line-height: 2.5em;
+    align-self: center;
 }
 
-form {
+.login {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -63,7 +106,23 @@ form {
     box-shadow: 0 6px 6px #576155;
     border: 1px solid #576155;
     border-radius: 33px;
+}
 
+.recipe-form {
+    border-radius: 33px;
+    border: 1px solid grey;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    width: 40%;
+    padding-left: 5px;
+}
+
+.create-recipe-form {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    align-items: start;
 }
 
 .hoverable_menu {
@@ -105,6 +164,7 @@ form {
     text-align: center;
     padding: 16px;
     text-decoration: none;
+    display: inline-flex;
 }
 
 .search-container {
@@ -119,6 +179,7 @@ form {
     text-align: center;
     padding: 16px;
     text-decoration: none;
+    display: inline-flex;
 }
 
 .menu-links a:hover {
