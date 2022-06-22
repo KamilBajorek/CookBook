@@ -1,4 +1,6 @@
 <?php
+require_once 'User.php';
+require_once 'RecipeCategory.php';
 
 class Recipe
 {
@@ -7,9 +9,10 @@ class Recipe
 
     private User $author;
 
+    private RecipeCategory $category;
+    
     private $ingredients;
     private $image;
-    private $category;
 
     public function __construct($title, $description, $ingredients, $image, $author, $category)
     {
