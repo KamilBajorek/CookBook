@@ -10,15 +10,14 @@ class Recipe
     private User $author;
 
     private RecipeCategory $category;
-    
-    private $ingredients;
+
+    private array $ingredients;
     private $image;
 
-    public function __construct($title, $description, $ingredients, $image, $author, $category)
+    public function __construct($title, $description, $image, $author, $category)
     {
         $this->title = $title;
         $this->description = $description;
-        $this->ingredients = $ingredients;
         $this->image = $image;
         $this->author = $author;
         $this->category = $category;
