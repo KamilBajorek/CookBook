@@ -7,14 +7,14 @@ require_once __DIR__ . '/../repository/RecipeCategoryRepository.php';
 
 class RecipeRepository extends Repository
 {
-    protected $tableName = 'recipes';
+    protected string $tableName = 'recipes';
 
     private IngredientRepository $ingredientRepository;
     private RecipeCategoryRepository $recipeCategoryRepository;
 
     public function __construct()
     {
-        parent::__construct();
+        parent::__construct('recipes');
 
         $this->ingredientRepository = new IngredientRepository();
         $this->recipeCategoryRepository = new RecipeCategoryRepository();
@@ -38,11 +38,11 @@ class RecipeRepository extends Repository
         return new Recipe($recipe['title'], $recipe['description'], $recipe['image'], $recipe['authorId'], $category);
     }
 
-    public function addProject(Recipe $recipe): void
+    public function createRecipe(Recipe $recipe): void
     {
         $date = new DateTime();
         $stmt = $this->database->connect()->prepare('
-            INSERT INTO recipes (title, description, image, created_at, id_assigned_by)
+            INSERT INTO recipes (title, description, "authorId", "categoryId", "createdDate", image)
             VALUES (?, ?, ?, ?, ?)
         ');
 
@@ -51,9 +51,10 @@ class RecipeRepository extends Repository
         $stmt->execute([
             $recipe->getTitle(),
             $recipe->getDescription(),
-            $recipe->getImage(),
+            $assignedById,
+            $recipe->getCategory()->getId(),
             $date->format('Y-m-d'),
-            $assignedById
+            $recipe->getImage()
         ]);
     }
 

@@ -5,19 +5,19 @@ require_once __DIR__ . '/../../Database.php';
 abstract class Repository
 {
     protected $database;
-    protected $tableName;
+    protected string $tableName;
 
-    public function __construct()
+    public function __construct($tableName)
     {
         $this->database = new Database();
+        $this->tableName = $tableName;
     }
 
     public function findById(int $id)
     {
-        $statement = $this->database->connect()->prepare('
-        SELECT * FROM :tableName WHERE id = :id ');
+        $statement = $this->database->connect()->prepare("
+        SELECT * FROM $this->tableName WHERE id = :id ");
 
-        $statement->bindParam(':tableName', $this->tableName, PDO::PARAM_STR);
         $statement->bindParam(':id', $id, PDO::PARAM_INT);
         $statement->execute();
 
@@ -26,13 +26,12 @@ abstract class Repository
 
     public function findAll(): array
     {
-        $statement = $this->database->connect()->prepare('
-        SELECT * FROM :tableName');
+        $statement = $this->database->connect()->prepare("
+        SELECT * FROM $this->tableName");
 
-        $statement->bindParam(':tableName', $this->tableName, PDO::PARAM_STR);
         $statement->execute();
 
-        $data = $statement->fetch(PDO::FETCH_ASSOC);
+        $data = $statement->fetchAll(PDO::FETCH_ASSOC);
         $results = [];
 
         foreach ($data as $result) {

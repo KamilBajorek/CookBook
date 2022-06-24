@@ -158,6 +158,22 @@ button {
     font-size: 17px;
 }
 
+.action-menu {
+    border-radius: 33px;
+    width: 60%;
+    background: white;
+}
+
+.action-menu a {
+    text-align: center;
+    border-right: 1px solid grey;
+    float: left;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    padding-right: 10px;
+}
+
 .menu-links a {
     float: left;
     color: #576155;
@@ -190,4 +206,37 @@ button {
 .menu-links a.active {
     border-bottom: 3px solid #89C1C0;
     color: #576155;
+}
+
+section {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-gap: 2em;
+    padding: 2em;
+    overflow: auto;
+}
+
+.recipes > div > img {
+    height: 50%;
+    width: 100%;
+    object-fit: cover;
+    border-radius: 1em 1em 0 0;
+}
+
+.recipes > div > div {
+    height: 50%;
+    margin: 1em;
+    color: #2699FB;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+
+.recipes > div {
+    border: 1px solid gray;
+    border-radius: 1em 1em 0 0;
+    height: 400px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }

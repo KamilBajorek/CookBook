@@ -5,7 +5,12 @@ require_once __DIR__ . '/../models/User.php';
 
 class UserRepository extends Repository
 {
-    protected $tableName = 'users';
+    protected string $tableName = 'users';
+
+    public function __construct()
+    {
+        parent::__construct('users');
+    }
 
     public function getUser(string $email): ?User
     {
@@ -23,6 +28,6 @@ class UserRepository extends Repository
         if (!$statement) {
             return null;
         }
-        return new User($statement['email'], $statement['password'], $statement['name'], $statement['surname']);
+        return new User($statement['id'], $statement['email'], $statement['password'], $statement['name'], $statement['surname']);
     }
 }

@@ -2,6 +2,9 @@
 
 require_once 'AppController.php';
 require_once __DIR__ . '/../models/Recipe.php';
+require_once __DIR__ . '/../service/RecipeService.php';
+require_once __DIR__ . '/../service/RecipeServiceImpl.php';
+require_once __DIR__ . '/../repository/RecipeCategoryRepository.php';
 
 class RecipeController extends AppController
 {
@@ -11,19 +14,44 @@ class RecipeController extends AppController
 
     private $message = [];
 
+    private RecipeService $recipeService;
+    private RecipeCategoryRepository $recipeCategoryRepository;
+
+    public function __construct()
+    {
+        parent::__construct();
+        $this->recipeService = new RecipeServiceImpl();
+        $this->recipeCategoryRepository = new RecipeCategoryRepository();
+    }
+
+    public function recipes()
+    {
+        $recipes = $this->recipeService->getRecipes();
+        $this->render('recipes', ['recipes' => $recipes]);
+    }
+
     public function createRecipe()
     {
+        $categories = $this->recipeCategoryRepository->findAll();
+
         if ($this->isPost() && is_uploaded_file($_FILES['file']['tmp_name']) && $this->validateFile($_FILES['file'])) {
             move_uploaded_file(
                 $_FILES['file']['tmp_name'],
                 dirname(__DIR__) . self::UPLOAD_DIRECTORY . $_FILES['file']['name']
             );
 
-            //$recipe = new Recipe($_POST['title'], $_POST['description'], $_POST['$ingredients'], $_FILES['file']['name'], $_POST['$category']);
+            $_POST['image'] = $_FILES['file']['name'];
+
+            try {
+                $this->recipeService->createRecipe($_POST);
+            } catch (Exception $e) {
+                $this->message[] = $e->getMessage();
+                return $this->render('createRecipe', ['messages' => $this->message, 'categories' => $categories]);
+            }
 
             return $this->render('recipes', ['messages' => $this->message]);
         }
-        return $this->render('createRecipe', ['messages' => $this->message]);
+        return $this->render('createRecipe', ['messages' => $this->message, 'categories' => $categories]);
     }
 
     private function validateFile(array $file): bool

@@ -5,7 +5,12 @@ require_once __DIR__ . '/../models/Ingredient.php';
 
 class IngredientRepository extends Repository
 {
-    protected $tableName = 'Ingredients';
+    protected string $tableName = 'Ingredients';
+
+    public function __construct()
+    {
+        parent::__construct('Ingredients');
+    }
 
     public function convertFromStatement($statement): ?Ingredient
     {

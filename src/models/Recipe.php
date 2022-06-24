@@ -14,12 +14,11 @@ class Recipe
     private array $ingredients;
     private $image;
 
-    public function __construct($title, $description, $image, $author, $category)
+    public function __construct($title, $description, $image, $category)
     {
         $this->title = $title;
         $this->description = $description;
         $this->image = $image;
-        $this->author = $author;
         $this->category = $category;
     }
 
