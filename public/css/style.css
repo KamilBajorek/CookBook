@@ -55,7 +55,7 @@ input:focus, textarea:focus, select:focus {
     outline: none;
 }
 
-h1, h3 {
+h1, h2, h3 {
     text-align: center;
     align-self: center;
 }
@@ -116,6 +116,34 @@ button {
     flex-wrap: wrap;
     width: 40%;
     padding-left: 5px;
+}
+
+.recipe {
+    border-radius: 1em 1em 1em 1em;
+    border: 1px solid grey;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    width: 50%;
+}
+
+.recipe-view {
+    display: flex;
+}
+
+.ingredients-view {
+    width: 20%;
+    border-right: 1px solid grey;
+}
+
+.description-view {
+    width: 80%;
+    margin-left: 5%
+}
+
+.recipe > img {
+    border-radius: 1em 1em 0 0;
+    width: -webkit-fill-available;
 }
 
 .create-recipe-form {
@@ -189,6 +217,13 @@ button {
     text-decoration: none;
 }
 
+.recipe-title {
+    padding-top: 10px;
+    padding-bottom: 10px;
+    margin-top: 0;
+    background-color: #bbc9b4;
+}
+
 .user-container a, i {
     float: left;
     color: #576155;
@@ -216,7 +251,22 @@ section {
     overflow: auto;
 }
 
-.recipes > div > img {
+.card > div > p {
+    display: block;
+    width: 250px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.recipes > div > a > img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 1em 1em 0 0;
+}
+
+.recipes > div > a {
     height: 50%;
     width: 100%;
     object-fit: cover;
@@ -225,16 +275,18 @@ section {
 
 .recipes > div > div {
     height: 50%;
-    margin: 1em;
-    color: #2699FB;
-    display: flex;
-    flex-direction: column;
     justify-content: space-around;
+    flex-direction: column;
+    flex-wrap: nowrap;
+}
+
+.recipes > div > div > p {
+
 }
 
 .recipes > div {
     border: 1px solid gray;
-    border-radius: 1em 1em 0 0;
+    border-radius: 1em 1em 1em 1em;
     height: 400px;
     display: flex;
     flex-direction: column;

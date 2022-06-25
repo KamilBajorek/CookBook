@@ -10,21 +10,7 @@
 </head>
 <body>
 <div class="container">
-    <div class="menu">
-        <a href="#">
-            <img class="menu-logo" src="public/img/CookBook_Logo.svg" alt="CookBook"></a>
-        <div class="menu-links">
-            <a href="">All recipes</a>
-            <a href="#news">Saved</a>
-        </div>
-        <div class="search-container">
-            <input class="input-search" name="search" type="text" placeholder="search"/>
-        </div>
-        <div class="user-container">
-            <i class="fa-solid fa-user"></i>
-            <a href="#about">John Kowalsky</a>
-        </div>
-    </div>
+    <?php $title = 'menu'; include("templates/menu.php");?>
 
     <section class="recipe-form">
         <h1>Create new recipe</h1>
@@ -52,18 +38,19 @@
             <textarea name="description" rows=5 placeholder="Description"></textarea>
             <h3>Ingredients list</h3>
             <div class="ingredient-select-container" id="ingredients">
-                <select name="ingredient" class="ingredient-select">
-                    <option value="1">Milk</option>
-                    <option value="2">Flour</option>
+                <select name="ingredient-1" class="ingredient-select" id="ingredient-select-1">
+                    <?php foreach ($ingredients as $ingredient): ?>
+                        <option value="<?= $ingredient->getId() ?>"><?= $ingredient->getName() ?></option>
+                    <?php endforeach; ?>
                 </select>
-                <input name="amount" type="number" placeholder="amount" class="amount-input">
-                <select name="amount-type" class="amount-select">
-                    <option value="1">ml</option>
-                    <option value="2">oz</option>
-                    <option value="3">g</option>
+                <input name="amount-1" type="number" placeholder="amount" class="amount-input" id="amount-1">
+                <select name="amount-type-1" class="amount-select" id="amount-type-1">
+                    <?php foreach ($amountTypes as $amountType): ?>
+                        <option value="<?= $amountType->getId() ?>"><?= $amountType->getName() ?></option>
+                    <?php endforeach; ?>
                 </select>
             </div>
-            <button class="icon-button" id="add-ingredient-button"><i class="fa-solid fa-plus"></i></button>
+            <button class="icon-button" type="button" id="add-ingredient-button"><i class="fa-solid fa-plus"></i></button>
 
             <button type="submit">Create</button>
         </form>

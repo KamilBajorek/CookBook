@@ -8,16 +8,20 @@ class Routing
 {
     public static $routes;
 
-    public static function get($url, $view) {
+    public static function get($url, $view)
+    {
         self::$routes[$url] = $view;
     }
 
-    public static function post($url, $view) {
+    public static function post($url, $view)
+    {
         self::$routes[$url] = $view;
     }
 
-    public static function run ($url) {
-        $action = explode("/", $url)[0];
+    public static function run($url)
+    {
+        $urlElements = explode("/", $url);
+        $action = $urlElements[0];
         if (!array_key_exists($action, self::$routes)) {
             die("Wrong url!");
         }
@@ -26,6 +30,10 @@ class Routing
         $object = new $controller;
         $action = $action ?: 'index';
 
-        $object->$action();
+        if (sizeof($urlElements) > 1) {
+            $object->$action($urlElements[1]);
+        } else {
+            $object->$action();
+        }
     }
 }

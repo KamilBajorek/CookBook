@@ -4,6 +4,7 @@ require_once 'RecipeCategory.php';
 
 class Recipe
 {
+    private int $id;
     private string $title;
     private string $description;
 
@@ -11,7 +12,7 @@ class Recipe
 
     private RecipeCategory $category;
 
-    private array $ingredients;
+    private $ingredients;
     private $image;
 
     public function __construct($title, $description, $image, $category)
@@ -20,6 +21,16 @@ class Recipe
         $this->description = $description;
         $this->image = $image;
         $this->category = $category;
+    }
+
+    public function getId(): int
+    {
+        return $this->id;
+    }
+
+    public function setId($id): void
+    {
+        $this->id = $id;
     }
 
     public function getTitle()

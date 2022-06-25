@@ -5,13 +5,13 @@ require_once __DIR__ . '/../models/AmountType.php';
 
 class AmountTypeRepository extends Repository
 {
-    protected string $tableName = 'AmountTypes';
+    protected string $tableName = '"AmountTypes"';
 
     public function __construct()
     {
-        parent::__construct('AmountTypes');
+        parent::__construct($this->tableName);
     }
-    
+
     public function convertFromStatement($statement): ?AmountType
     {
         if (!$statement) {

@@ -4,20 +4,23 @@ require_once 'Repository.php';
 require_once __DIR__ . '/../models/Recipe.php';
 require_once __DIR__ . '/../repository/IngredientRepository.php';
 require_once __DIR__ . '/../repository/RecipeCategoryRepository.php';
+require_once __DIR__ . '/../repository/UserRepository.php';
 
 class RecipeRepository extends Repository
 {
     protected string $tableName = 'recipes';
 
-    private IngredientRepository $ingredientRepository;
+    private RecipeIngredientRepository $recipeIngredientRepository;
     private RecipeCategoryRepository $recipeCategoryRepository;
+    private UserRepository $userRepository;
 
     public function __construct()
     {
-        parent::__construct('recipes');
+        parent::__construct($this->tableName);
 
-        $this->ingredientRepository = new IngredientRepository();
+        $this->recipeIngredientRepository = new RecipeIngredientRepository();
         $this->recipeCategoryRepository = new RecipeCategoryRepository();
+        $this->userRepository = new UserRepository();
     }
 
     public function getRecipe(int $id): ?Recipe
@@ -35,20 +38,21 @@ class RecipeRepository extends Repository
         if (!$recipe) {
             return null;
         }
-        return new Recipe($recipe['title'], $recipe['description'], $recipe['image'], $recipe['authorId'], $category);
+        return new Recipe($recipe['title'], $recipe['description'], $recipe['image'], $category);
     }
 
-    public function createRecipe(Recipe $recipe): void
+    public function createRecipe(Recipe $recipe): int
     {
         $date = new DateTime();
-        $stmt = $this->database->connect()->prepare('
+        $pdo = $this->database->connect();
+        $stmt = $pdo->prepare('
             INSERT INTO recipes (title, description, "authorId", "categoryId", "createdDate", image)
-            VALUES (?, ?, ?, ?, ?)
+            VALUES (?, ?, ?, ?, ?, ?)
         ');
 
         $assignedById = 1;
 
-        $stmt->execute([
+        $result = $stmt->execute([
             $recipe->getTitle(),
             $recipe->getDescription(),
             $assignedById,
@@ -56,6 +60,7 @@ class RecipeRepository extends Repository
             $date->format('Y-m-d'),
             $recipe->getImage()
         ]);
+        return $pdo->lastInsertId();
     }
 
     public function convertFromStatement($statement): ?Recipe
@@ -63,6 +68,16 @@ class RecipeRepository extends Repository
         if (!$statement) {
             return null;
         }
-        return new Recipe($statement['email'], $statement['password'], $statement['name'], $statement['surname']);
+        $category = $this->recipeCategoryRepository->findById($statement['categoryId']);
+        $author = $this->userRepository->findById($statement['authorId']);
+        $ingredients = $this->recipeIngredientRepository->findByRecipeId($statement['id']);
+
+        $recipe = new Recipe($statement['title'], $statement['description'], $statement['image'], $category);
+
+        $recipe->setAuthor($author);
+        $recipe->setIngredients($ingredients);
+        $recipe->setId($statement['id']);
+
+        return $recipe;
     }
 }
