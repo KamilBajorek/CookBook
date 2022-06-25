@@ -26,6 +26,13 @@ class Routing
             die("Wrong url!");
         }
 
+        if (!isset($_SESSION['user'])) {
+            if ($action != 'login' && $action != 'register') {
+                $action = 'login';
+                $urlElements = [];
+            }
+        }
+
         $controller = self::$routes[$action];
         $object = new $controller;
         $action = $action ?: 'index';

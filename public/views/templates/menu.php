@@ -10,6 +10,9 @@
     </div>
     <div class="user-container">
         <i class="fa-solid fa-user"></i>
-        <a href="#about">John Kowalsky</a>
+        <a>John Kowalsky</a>
+        <div class="logout-dropdown">
+            <a id="logout-button" href="/logout"><i class="fa-solid fa-power-off"></i>Log out</a>
+        </div>
     </div>
 </div>

@@ -18,6 +18,30 @@ body {
     width: 50%;
 }
 
+.logout-dropdown {
+    display: none;
+    position: absolute;
+    background-color: #f1f1f1;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+}
+
+.logout-button {
+    float: none;
+    text-align: center;
+    padding: 0;
+    text-decoration: none;
+}
+
+.logout-dropdown a:hover {
+    background-color: #ddd;
+}
+
+.user-container:hover .logout-dropdown {
+    display: block;
+}
+
 .logo {
     width: 50%;
     margin-top: 10%;
@@ -224,7 +248,7 @@ button {
     background-color: #bbc9b4;
 }
 
-.user-container a, i {
+.user-container > a, i {
     float: left;
     color: #576155;
     text-align: center;
