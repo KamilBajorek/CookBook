@@ -23,11 +23,34 @@ class UserRepository extends Repository
         return $this->convertFromStatement($statement->fetch(PDO::FETCH_ASSOC));
     }
 
+    public function createUser(User $user): int
+    {
+        $pdo = $this->database->connect();
+        $statement = $pdo->prepare('
+            INSERT INTO users (email, password, name, surname)
+            VALUES (?, ?, ?, ?)
+        ');
+
+        $result = $statement->execute([
+            $user->getEmail(),
+            $user->getPassword(),
+            $user->getName(),
+            $user->getSurname()
+        ]);
+
+        return $pdo->lastInsertId();
+    }
+
     public function convertFromStatement($statement): ?User
     {
         if (!$statement) {
             return null;
         }
-        return new User($statement['id'], $statement['email'], $statement['password'], $statement['name'], $statement['surname']);
+        $user = new User($statement['email'], $statement['password'], $statement['name'], $statement['surname']);
+
+        $user->setId($statement['id']);
+        $user->setIsAdmin($statement['isAdmin']);
+
+        return $user;
     }
 }

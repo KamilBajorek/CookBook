@@ -1,6 +1,6 @@
 <?php
 
-require_once 'AppController.php';
+require_once 'LoggedController.php';
 require_once __DIR__ . '/../models/Recipe.php';
 require_once __DIR__ . '/../service/RecipeService.php';
 require_once __DIR__ . '/../service/RecipeServiceImpl.php';
@@ -8,7 +8,7 @@ require_once __DIR__ . '/../repository/RecipeCategoryRepository.php';
 require_once __DIR__ . '/../repository/IngredientRepository.php';
 require_once __DIR__ . '/../repository/AmountTypeRepository.php';
 
-class RecipeController extends AppController
+class RecipeController extends LoggedController
 {
     const MAX_FILE_SIZE = 1024 * 1024;
     const SUPPORTED_TYPES = ['image/png', 'image/jpeg'];
@@ -34,6 +34,22 @@ class RecipeController extends AppController
     {
         $recipe = $this->recipeService->getRecipe($id);
         $this->render('recipe', ['recipe' => $recipe]);
+    }
+
+    public function delete($id)
+    {
+        try {
+            if ($this->getLoggedUser()->isAdmin()) {
+                $this->recipeService->deleteRecipe($id);
+                $recipes = $this->recipeService->getRecipes();
+
+                $this->render('recipes', ['recipes' => $recipes]);
+            }
+        } catch (Exception $e) {
+            $recipes = $this->recipeService->getRecipes();
+
+            $this->render('recipes', ['recipes' => $recipes, 'messages' => $e->getMessage()]);
+        }
     }
 
     public function recipes()
@@ -63,9 +79,13 @@ class RecipeController extends AppController
                 return $this->render('createRecipe', ['messages' => $this->message, 'categories' => $categories, 'ingredients' => $ingredients, 'amountTypes' => $amountTypes]);
             }
 
-            return $this->render('recipes', ['messages' => $this->message]);
+            return $this->recipes();
         }
         return $this->render('createRecipe', ['messages' => $this->message, 'categories' => $categories, 'ingredients' => $ingredients, 'amountTypes' => $amountTypes]);
+    }
+
+    private function search(){
+
     }
 
     private function validateFile(array $file): bool

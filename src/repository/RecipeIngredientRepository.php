@@ -25,7 +25,6 @@ class RecipeIngredientRepository extends Repository
         $statement = $this->database->connect()->prepare("
         SELECT * FROM $this->tableName WHERE recipeid = :id ");
 
-
         $statement->bindParam(':id', $id, PDO::PARAM_INT);
         $statement->execute();
         $data = $statement->fetchAll(PDO::FETCH_ASSOC);
@@ -62,5 +61,14 @@ class RecipeIngredientRepository extends Repository
         $ingredient = $this->ingredientRepository->findById($statement['ingredientid']);
 
         return new RecipeIngredient($statement['recipeid'], $statement['amount'], $ingredient, $amountType);
+    }
+
+    public function deleteByRecipeId(int $id) : void
+    {
+        $statement = $this->database->connect()->prepare("
+        DELETE FROM $this->tableName WHERE recipeid = :id ");
+
+        $statement->bindParam(':id', $id, PDO::PARAM_INT);
+        $statement->execute();
     }
 }

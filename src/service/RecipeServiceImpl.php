@@ -61,4 +61,10 @@ class RecipeServiceImpl implements RecipeService
     {
         return $this->recipeRepository->findById($id);
     }
+
+    function deleteRecipe($id): void
+    {
+        $this->recipeIngredientRepository->deleteByRecipeId($id);
+        $this->recipeRepository->deleteRecipe($id);
+    }
 }

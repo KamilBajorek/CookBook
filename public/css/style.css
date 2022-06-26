@@ -132,6 +132,23 @@ button {
     border-radius: 33px;
 }
 
+
+.login-form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+.signup-form {
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
 .recipe-form {
     border-radius: 33px;
     border: 1px solid grey;

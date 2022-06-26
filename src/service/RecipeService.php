@@ -7,4 +7,6 @@ interface RecipeService
     function getRecipes();
 
     function getRecipe($id);
+
+    function deleteRecipe($id);
 }

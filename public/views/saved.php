@@ -4,7 +4,7 @@
     <script src="https://kit.fontawesome.com/8a1c41654d.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" type="text/css" href="public/css/style.css">
     <meta charset="UTF-8">
-    <title>Recipes</title>
+    <title>Saved</title>
 </head>
 <body>
 <div class="container">

@@ -41,18 +41,27 @@ class RecipeRepository extends Repository
         return new Recipe($recipe['title'], $recipe['description'], $recipe['image'], $category);
     }
 
+    public function deleteRecipe(int $id): void
+    {
+        $statement = $this->database->connect()->prepare('
+        DELETE FROM recipes WHERE id = :id ');
+
+        $statement->bindParam(':id', $id, PDO::PARAM_INT);
+        $statement->execute();
+    }
+
     public function createRecipe(Recipe $recipe): int
     {
         $date = new DateTime();
         $pdo = $this->database->connect();
-        $stmt = $pdo->prepare('
+        $statement = $pdo->prepare('
             INSERT INTO recipes (title, description, "authorId", "categoryId", "createdDate", image)
             VALUES (?, ?, ?, ?, ?, ?)
         ');
 
-        $assignedById = 1;
+        $assignedById = $_SESSION['user'];
 
-        $result = $stmt->execute([
+        $result = $statement->execute([
             $recipe->getTitle(),
             $recipe->getDescription(),
             $assignedById,

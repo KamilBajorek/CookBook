@@ -10,8 +10,10 @@ $path = parse_url($path, PHP_URL_PATH);
 Routing::get('', 'DefaultController');
 Routing::get('recipes', 'RecipeController');
 Routing::get('recipe', 'RecipeController');
+Routing::get('delete', 'RecipeController');
 
 Routing::post('login', 'SecurityController');
+Routing::post('signup', 'SecurityController');
 Routing::post('logout', 'SecurityController');
 Routing::post('createRecipe', 'RecipeController');
 

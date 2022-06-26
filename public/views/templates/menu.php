@@ -10,7 +10,11 @@
     </div>
     <div class="user-container">
         <i class="fa-solid fa-user"></i>
-        <a>John Kowalsky</a>
+        <?php
+        if (isset($user)) { ?>
+            <a><?= $user->getName(); ?>
+                <?= $user->getSurname(); ?></a>
+        <?php }?>
         <div class="logout-dropdown">
             <a id="logout-button" href="/logout"><i class="fa-solid fa-power-off"></i>Log out</a>
         </div>

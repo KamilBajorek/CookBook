@@ -27,7 +27,7 @@ class Routing
         }
 
         if (!isset($_SESSION['user'])) {
-            if ($action != 'login' && $action != 'register') {
+            if ($action != 'login' && $action != 'signup') {
                 $action = 'login';
                 $urlElements = [];
             }

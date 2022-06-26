@@ -7,10 +7,10 @@ class User
     private $password;
     private $name;
     private $surname;
+    private bool $isAdmin;
 
-    public function __construct(int $id, string $email, string $password, string $name, string $surname)
+    public function __construct(string $email, string $password, string $name, string $surname)
     {
-        $this->id = $id;
         $this->email = $email;
         $this->password = $password;
         $this->name = $name;
@@ -65,5 +65,15 @@ class User
     public function setSurname(string $surname): void
     {
         $this->surname = $surname;
+    }
+
+    public function isAdmin(): bool
+    {
+        return $this->isAdmin;
+    }
+
+    public function setIsAdmin(bool $isAdmin): void
+    {
+        $this->isAdmin = $isAdmin;
     }
 }
