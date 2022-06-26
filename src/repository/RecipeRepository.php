@@ -23,22 +23,52 @@ class RecipeRepository extends Repository
         $this->userRepository = new UserRepository();
     }
 
-    public function getRecipe(int $id): ?Recipe
+    public function findByIdList(array $idList): array
     {
-        $statement = $this->database->connect()->prepare('
-        SELECT * FROM recipes WHERE id = :id ');
+        if (sizeof($idList) == 0) {
+            return [];
+        }
 
-        $statement->bindParam(':id', $id, PDO::PARAM_INT);
+        if (sizeof($idList) == 1) {
+            return [$this->findById($idList[0])];
+        }
+
+        $inQuery = implode(',', array_fill(0, count($idList), '?'));
+        $statement = $this->database->connect()->prepare('
+        SELECT * FROM recipes WHERE id IN(' . $inQuery . ')');
+
+        foreach ($idList as $k => $id) {
+            $statement->bindValue(($k + 1), $id);
+        }
+
         $statement->execute();
 
-        $recipe = $statement->fetch(PDO::FETCH_ASSOC);
-
-        $category = $this->recipeCategoryRepository->findById($recipe['categoryId']);
-
-        if (!$recipe) {
-            return null;
+        $data = $statement->fetchAll(PDO::FETCH_ASSOC);
+        $results = [];
+        foreach ($data as $result) {
+            $results[] = $this->convertFromStatement($result);
         }
-        return new Recipe($recipe['title'], $recipe['description'], $recipe['image'], $category);
+
+        return $results;
+    }
+
+    public function findByTitleOrDescription(string $searchString)
+    {
+        $searchString = '%' . strtolower($searchString) . '%';
+
+        $statement = $this->database->connect()->prepare('
+            SELECT * FROM recipes WHERE LOWER(title) LIKE :search OR LOWER(description) LIKE :search
+        ');
+        $statement->bindParam(':search', $searchString, PDO::PARAM_STR);
+        $statement->execute();
+
+        $data = $statement->fetchAll(PDO::FETCH_ASSOC);
+        $results = [];
+        foreach ($data as $result) {
+            $results[] = $this->convertFromStatement($result);
+        }
+
+        return $results;
     }
 
     public function deleteRecipe(int $id): void

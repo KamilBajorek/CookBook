@@ -58,6 +58,22 @@ class RecipeController extends LoggedController
         $this->render('recipes', ['recipes' => $recipes]);
     }
 
+    public function saved()
+    {
+        $recipes = $this->recipeService->getSaved();
+        $this->render('saved', ['recipes' => $recipes]);
+    }
+
+    public function save($id)
+    {
+        $this->recipeService->save($id);
+    }
+
+    public function unSave($id)
+    {
+        $this->recipeService->unSave($id);
+    }
+
     public function createRecipe()
     {
         $categories = $this->recipeCategoryRepository->findAll();
@@ -84,8 +100,19 @@ class RecipeController extends LoggedController
         return $this->render('createRecipe', ['messages' => $this->message, 'categories' => $categories, 'ingredients' => $ingredients, 'amountTypes' => $amountTypes]);
     }
 
-    private function search(){
+    public function search()
+    {
+        $contentType = isset($_SERVER["CONTENT_TYPE"]) ? trim($_SERVER["CONTENT_TYPE"]) : '';
 
+        if ($contentType === "application/json") {
+            $content = trim(file_get_contents("php://input"));
+            $decoded = json_decode($content, true);
+
+            header('Content-type: application/json');
+            http_response_code(200);
+
+            echo json_encode($this->recipeService->search($decoded['search']));
+        }
     }
 
     private function validateFile(array $file): bool

@@ -6,7 +6,15 @@ interface RecipeService
 
     function getRecipes();
 
+    function getSaved();
+
     function getRecipe($id);
 
     function deleteRecipe($id);
+
+    function save($id);
+
+    function unSave($id);
+
+    function search($search);
 }

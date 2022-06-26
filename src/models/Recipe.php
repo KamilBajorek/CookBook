@@ -2,7 +2,7 @@
 require_once 'User.php';
 require_once 'RecipeCategory.php';
 
-class Recipe
+class Recipe implements JsonSerializable
 {
     private int $id;
     private string $title;
@@ -14,6 +14,8 @@ class Recipe
 
     private $ingredients;
     private $image;
+
+    private bool $isSavedForUser;
 
     public function __construct($title, $description, $image, $category)
     {
@@ -91,6 +93,28 @@ class Recipe
     public function setCategory($category): void
     {
         $this->category = $category;
+    }
+
+    public function isSavedForUser(): bool
+    {
+        return $this->isSavedForUser;
+    }
+
+    public function setIsSavedForUser(bool $isSavedForUser): void
+    {
+        $this->isSavedForUser = $isSavedForUser;
+    }
+
+    public function jsonSerialize(): mixed
+    {
+        return [
+            'id' => $this->getId(),
+            'title' => $this->getTitle(),
+            'image' => $this->getImage(),
+            'category' => $this->getCategory()->getId(),
+            'description' => $this->getDescription(),
+            'author' => $this->getAuthor()->getName() . ' ' . $this->getAuthor()->getSurname()
+        ];
     }
 
 }

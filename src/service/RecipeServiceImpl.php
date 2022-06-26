@@ -9,6 +9,7 @@ require_once __DIR__ . '/../repository/RecipeIngredientRepository.php';
 require_once __DIR__ . '/../repository/RecipeRepository.php';
 require_once __DIR__ . '/../repository/AmountTypeRepository.php';
 require_once __DIR__ . '/../repository/IngredientRepository.php';
+require_once __DIR__ . '/../repository/SavedRepository.php';
 
 class RecipeServiceImpl implements RecipeService
 {
@@ -17,6 +18,7 @@ class RecipeServiceImpl implements RecipeService
     private RecipeIngredientRepository $recipeIngredientRepository;
     private IngredientRepository $ingredientRepository;
     private AmountTypeRepository $amountTypeRepository;
+    private SavedRepository $savedRepository;
 
     public function __construct()
     {
@@ -25,6 +27,7 @@ class RecipeServiceImpl implements RecipeService
         $this->recipeIngredientRepository = new RecipeIngredientRepository();
         $this->ingredientRepository = new IngredientRepository();
         $this->amountTypeRepository = new AmountTypeRepository();
+        $this->savedRepository = new SavedRepository();
     }
 
     /**
@@ -54,7 +57,10 @@ class RecipeServiceImpl implements RecipeService
 
     function getRecipes(): array
     {
-        return $this->recipeRepository->findAll();
+        $recipes = $this->recipeRepository->findAll();
+        $saved = $this->savedRepository->findByUserId($_SESSION['user']);
+
+        return $this->supplementRecipes($recipes, $saved);
     }
 
     function getRecipe($id)
@@ -66,5 +72,42 @@ class RecipeServiceImpl implements RecipeService
     {
         $this->recipeIngredientRepository->deleteByRecipeId($id);
         $this->recipeRepository->deleteRecipe($id);
+    }
+
+    function getSaved(): array
+    {
+        $recipeIds = $this->savedRepository->findByUserId($_SESSION['user']);
+
+        return $this->supplementRecipes($this->recipeRepository->findByIdList($recipeIds), $recipeIds);
+    }
+
+    function save($id)
+    {
+        $this->savedRepository->save($_SESSION['user'], $id);
+    }
+
+    function unSave($id)
+    {
+        $this->savedRepository->unSave($_SESSION['user'], $id);
+    }
+
+    function search($search)
+    {
+        $jsonObjects = [];
+        $results = $this->recipeRepository->findByTitleOrDescription($search);
+        foreach ($results as $result) {
+            $jsonObjects[] = json_encode($result);
+        }
+        return $jsonObjects;
+    }
+
+    private function supplementRecipes($recipes, $saved): array
+    {
+        $processed_recipes = [];
+        foreach ($recipes as $recipe) {
+            $recipe->setIsSavedForUser(in_array($recipe->getId(), $saved));
+            array_push($processed_recipes, $recipe);
+        }
+        return $processed_recipes;
     }
 }
