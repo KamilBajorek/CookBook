@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>DATABASE</ID>
+  <OriginalElement>a3b4766a-fabc-4dff-a46f-9629627a2923.SCHEMA:cookbook.public</OriginalElement>
+  <nodes>
+    <node x="-249.0" y="160.5">a3b4766a-fabc-4dff-a46f-9629627a2923.TABLE:cookbook.public.AmountTypes</node>
+    <node x="-9.70108695652172" y="-85.0">a3b4766a-fabc-4dff-a46f-9629627a2923.TABLE:cookbook.public.RecipeCategories</node>
+    <node x="205.0" y="123.0">a3b4766a-fabc-4dff-a46f-9629627a2923.TABLE:cookbook.public.recipes</node>
+    <node x="43.0" y="406.0">a3b4766a-fabc-4dff-a46f-9629627a2923.TABLE:cookbook.public.RecipeIngredients</node>
+    <node x="361.29891304347825" y="-129.0">a3b4766a-fabc-4dff-a46f-9629627a2923.TABLE:cookbook.public.users</node>
+    <node x="336.75" y="406.0">a3b4766a-fabc-4dff-a46f-9629627a2923.TABLE:cookbook.public.saved</node>
+    <node x="-57.0" y="160.5">a3b4766a-fabc-4dff-a46f-9629627a2923.TABLE:cookbook.public.Ingredients</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="a3b4766a-fabc-4dff-a46f-9629627a2923.TABLE:cookbook.public.saved" target="a3b4766a-fabc-4dff-a46f-9629627a2923.TABLE:cookbook.public.users" relationship="REFERENCES">
+      <point x="29.75" y="-49.5" />
+      <point x="426.0" y="336.0" />
+      <point x="387.04891304347825" y="336.0" />
+      <point x="387.04891304347825" y="97.0" />
+      <point x="477.54891304347825" y="97.0" />
+      <point x="38.75" y="82.5" />
+    </edge>
+    <edge source="a3b4766a-fabc-4dff-a46f-9629627a2923.TABLE:cookbook.public.recipes" target="a3b4766a-fabc-4dff-a46f-9629627a2923.TABLE:cookbook.public.users" relationship="REFERENCES">
+      <point x="34.0" y="-93.5" />
+      <point x="307.0" y="97.0" />
+      <point x="400.04891304347825" y="97.0" />
+      <point x="-38.75" y="82.5" />
+    </edge>
+    <edge source="a3b4766a-fabc-4dff-a46f-9629627a2923.TABLE:cookbook.public.RecipeIngredients" target="a3b4766a-fabc-4dff-a46f-9629627a2923.TABLE:cookbook.public.AmountTypes" relationship="REFERENCES">
+      <point x="-54.0" y="-71.5" />
+      <point x="70.0" y="336.0" />
+      <point x="-182.5" y="336.0" />
+      <point x="0.0" y="38.5" />
+    </edge>
+    <edge source="a3b4766a-fabc-4dff-a46f-9629627a2923.TABLE:cookbook.public.RecipeIngredients" target="a3b4766a-fabc-4dff-a46f-9629627a2923.TABLE:cookbook.public.recipes" relationship="REFERENCES">
+      <point x="54.0" y="-71.5" />
+      <point x="178.0" y="336.0" />
+      <point x="273.0" y="336.0" />
+      <point x="0.0" y="93.5" />
+    </edge>
+    <edge source="a3b4766a-fabc-4dff-a46f-9629627a2923.TABLE:cookbook.public.RecipeIngredients" target="a3b4766a-fabc-4dff-a46f-9629627a2923.TABLE:cookbook.public.Ingredients" relationship="REFERENCES">
+      <point x="0.0" y="-71.5" />
+      <point x="124.0" y="336.0" />
+      <point x="9.5" y="336.0" />
+      <point x="0.0" y="38.5" />
+    </edge>
+    <edge source="a3b4766a-fabc-4dff-a46f-9629627a2923.TABLE:cookbook.public.recipes" target="a3b4766a-fabc-4dff-a46f-9629627a2923.TABLE:cookbook.public.RecipeCategories" relationship="REFERENCES">
+      <point x="-34.0" y="-93.5" />
+      <point x="239.0" y="97.0" />
+      <point x="68.29891304347828" y="97.0" />
+      <point x="0.0" y="38.5" />
+    </edge>
+    <edge source="a3b4766a-fabc-4dff-a46f-9629627a2923.TABLE:cookbook.public.saved" target="a3b4766a-fabc-4dff-a46f-9629627a2923.TABLE:cookbook.public.recipes" relationship="REFERENCES">
+      <point x="-29.75" y="-49.5" />
+      <point x="366.5" y="336.0" />
+      <point x="273.0" y="336.0" />
+      <point x="0.0" y="93.5" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic" zoom="1.0" showDependencies="false" x="189.5" y="205.5" />
+  <SelectedNodes />
+  <Categories>
+    <Category>Columns</Category>
+    <Category>Comments</Category>
+    <Category>Key columns</Category>
+    <Category>Virtual foreign keys</Category>
+  </Categories>
+</Diagram>
+
